@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>780</width><height>520</height></rect></property>
+  <property name="windowTitle"><string>MainWindow</string></property>
+  <property name="styleSheet"><string notr="true">/* Asche Yiu Police Department - dark / gold theme
+   Shared by every .ui file. Widgets pick a style through the dynamic
+   property  variant  (Qt Designer: Property Editor &gt; Dynamic Properties). */
+
+QMainWindow, QDialog, QWidget#centralwidget { background: #1c222a; }
+QWidget { color: #eaecef; font-family: "Inter", "SF Pro Text", "Segoe UI", "Helvetica Neue", sans-serif; font-size: 13px; }
+QLabel { background: transparent; }
+QCheckBox { background: transparent; spacing: 8px; }
+
+/* ---- typography ---- */
+QLabel[variant="title"]     { font-size: 20px; font-weight: 700; color: #eaecef; }
+QLabel[variant="subtitle"]  { font-size: 13px; color: #8b94a3; }
+QLabel[variant="field"]     { color: #8b94a3; }
+QLabel[variant="section"]   { color: #eaecef; font-size: 14px; font-weight: 600; }
+QLabel[variant="cardTitle"] { font-size: 16px; font-weight: 700; color: #eaecef; }
+QLabel[variant="value"]     { font-size: 14px; font-weight: 600; color: #eaecef; }
+QLabel[variant="hint"]      { color: #8b94a3; font-size: 12px; }
+QLabel[variant="stat"]      { color: #c3a459; font-size: 22px; font-weight: 700; }
+QFrame[variant="accent"]    { background: #c3a459; border: none; border-radius: 1px; }
+
+/* ---- badges / icons ---- */
+QLabel[variant="badgeGold"]  { background: rgba(195,164,89,40);  color: #c3a459; border-radius: 10px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+QLabel[variant="badgeGreen"] { background: rgba(111,159,125,40); color: #7fb08c; border-radius: 10px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+QLabel[variant="badgeRed"]   { background: rgba(184,105,95,45);  color: #cf7d72; border-radius: 10px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+QLabel[variant="badgeMuted"] { background: rgba(139,148,163,35); color: #aab2bf; border-radius: 10px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+QLabel[variant="avatar"]     { background: #c3a459; color: #10151a; border-radius: 24px; font-size: 16px; font-weight: 700; }
+QLabel[variant="iconGold"]   { background: rgba(195,164,89,40);  color: #c3a459; border-radius: 30px; font-size: 26px; font-weight: 700; }
+QLabel[variant="iconRed"]    { background: rgba(184,105,95,45);  color: #cf7d72; border-radius: 30px; font-size: 26px; font-weight: 700; }
+
+/* ---- containers ---- */
+QFrame[variant="card"]      { background: #252c37; border: 1px solid #2d3640; border-radius: 12px; }
+QFrame[variant="notice"]    { background: rgba(195,164,89,26);  border: 1px solid rgba(195,164,89,90);  border-radius: 8px; }
+QFrame[variant="noticeRed"] { background: rgba(184,105,95,30);  border: 1px solid rgba(184,105,95,100); border-radius: 8px; }
+QFrame[variant="dropzone"]  { background: #10151a; border: 1px dashed #3a4552; border-radius: 10px; }
+QFrame[variant="card"] QLabel, QFrame[variant="notice"] QLabel, QFrame[variant="noticeRed"] QLabel, QFrame[variant="dropzone"] QLabel { border: none; }
+
+/* ---- inputs ---- */
+QLineEdit, QTextEdit, QPlainTextEdit, QDateTimeEdit, QSpinBox, QDoubleSpinBox, QComboBox {
+    background: #10151a; border: 1px solid #2d3640; border-radius: 8px; padding: 8px 10px; min-height: 20px;
+    selection-background-color: #c3a459; selection-color: #10151a; }
+QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus, QDateTimeEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus, QComboBox:focus { border: 1px solid #c3a459; }
+QLineEdit[readOnly="true"], QPlainTextEdit[readOnly="true"], QTextEdit[readOnly="true"] { background: #161c22; color: #eaecef; }
+QComboBox QAbstractItemView { background: #10151a; border: 1px solid #2d3640; selection-background-color: #2b3440; selection-color: #eaecef; outline: 0; }
+
+/* ---- buttons ---- */
+QPushButton { background: #1c222a; border: 1px solid #2d3640; border-radius: 8px; padding: 9px 18px; min-height: 20px; font-weight: 600; color: #eaecef; }
+QPushButton:hover { background: #232b35; border-color: #3a4552; }
+QPushButton:pressed { background: #10151a; }
+QPushButton:disabled { color: #5b6573; border-color: #252d36; }
+QPushButton[variant="primary"] { background: #c3a459; border: 1px solid #c3a459; color: #10151a; font-weight: 700; }
+QPushButton[variant="primary"]:hover { background: #cfb26a; border-color: #cfb26a; }
+QPushButton[variant="primary"]:pressed { background: #b39549; }
+QPushButton[variant="primary"]:disabled { background: #4a4332; border-color: #4a4332; color: #8a8168; }
+QPushButton[variant="accept"] { background: #273235; border: 1px solid #34483f; color: #7fb08c; font-weight: 700; }
+QPushButton[variant="accept"]:hover { background: #2c3a3d; }
+QPushButton[variant="reject"] { background: #2f2b31; border: 1px solid #4a3638; color: #cf7d72; font-weight: 700; }
+QPushButton[variant="reject"]:hover { background: #352e34; }
+QPushButton[variant="tile"] { background: #252c37; border: 1px solid #2d3640; border-radius: 12px; padding: 16px 20px; text-align: left; font-size: 14px; font-weight: 500; }
+QPushButton[variant="tile"]:hover { border-color: #c3a459; background: #29313d; }
+
+/* ---- lists / tables ---- */
+QListWidget, QTableWidget, QTreeWidget { background: #10151a; border: 1px solid #252d36; border-radius: 10px; outline: 0; gridline-color: transparent; alternate-background-color: #131920; }
+QListWidget::item { padding: 10px 12px; border-bottom: 1px solid #1d242c; }
+QListWidget::item:selected, QTableWidget::item:selected { background: #232b35; color: #eaecef; }
+QListWidget::item:hover, QTableWidget::item:hover { background: #1a2129; }
+QTableWidget::item { padding: 8px 12px; border-bottom: 1px solid #1d242c; }
+QHeaderView { background: #252c37; border: none; border-top-left-radius: 10px; border-top-right-radius: 10px; }
+QHeaderView::section { background: #252c37; color: #8b94a3; font-weight: 600; border: none; padding: 10px 12px; }
+QTableCornerButton::section { background: #252c37; border: none; }
+QTableView::indicator, QListView::indicator, QCheckBox::indicator { width: 16px; height: 16px; border: 1px solid #3a4552; border-radius: 4px; background: #10151a; }
+QTableView::indicator:checked, QListView::indicator:checked, QCheckBox::indicator:checked { background: #c3a459; border-color: #c3a459; }
+
+/* ---- tabs ---- */
+QTabWidget::pane { border: none; top: 8px; }
+QTabBar::tab { background: transparent; color: #8b94a3; padding: 8px 16px; margin-right: 4px; border: none; border-bottom: 2px solid #2d3640; font-weight: 600; }
+QTabBar::tab:selected { color: #eaecef; border-bottom: 2px solid #c3a459; }
+QTabBar::tab:hover:!selected { color: #c9ced6; }
+
+/* ---- scrollbars ---- */
+QScrollBar:vertical { background: transparent; width: 10px; margin: 2px; }
+QScrollBar::handle:vertical { background: #2d3640; border-radius: 3px; min-height: 24px; }
+QScrollBar:horizontal { background: transparent; height: 10px; margin: 2px; }
+QScrollBar::handle:horizontal { background: #2d3640; border-radius: 3px; min-width: 24px; }
+QScrollBar::add-line, QScrollBar::sub-line { width: 0; height: 0; }
+QScrollBar::add-page, QScrollBar::sub-page { background: transparent; }
+
+/* spin boxes: keep typing area clean, arrows via keyboard / wheel */
+QSpinBox::up-button, QSpinBox::down-button, QDoubleSpinBox::up-button, QDoubleSpinBox::down-button { width: 0; border: none; }
+</string></property>
+  <widget class="QWidget" name="centralwidget"><layout class="QVBoxLayout" name="layout_213"><property name="leftMargin"><number>40</number></property><property name="topMargin"><number>36</number></property><property name="rightMargin"><number>40</number></property><property name="bottomMargin"><number>32</number></property><property name="spacing"><number>18</number></property><item><layout class="QVBoxLayout" name="layout_205"><property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property><property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property><property name="spacing"><number>6</number></property><item><widget class="QLabel" name="lblTitle"><property name="variant" stdset="0"><string>title</string></property><property name="text"><string>Link to Case</string></property></widget></item><item><widget class="QFrame" name="qframe_203"><property name="variant" stdset="0"><string>accent</string></property><property name="minimumSize"><size><width>32</width><height>3</height></size></property><property name="maximumSize"><size><width>32</width><height>3</height></size></property></widget></item><item><widget class="QLabel" name="qlabel_204"><property name="variant" stdset="0"><string>subtitle</string></property><property name="text"><string>Pick a case, then one of its suspects who is still at large</string></property></widget></item></layout></item><item><layout class="QHBoxLayout" name="layout_210"><property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property><property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property><property name="spacing"><number>16</number></property><item><layout class="QVBoxLayout" name="layout_207"><property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property><property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property><property name="spacing"><number>6</number></property><item><widget class="QLabel" name="qlabel_206"><property name="variant" stdset="0"><string>field</string></property><property name="text"><string>Ongoing cases</string></property></widget></item><item><widget class="QTableWidget" name="tblCases"><property name="rowCount"><number>3</number></property><property name="columnCount"><number>2</number></property><property name="editTriggers"><enum>QAbstractItemView::NoEditTriggers</enum></property><property name="selectionBehavior"><enum>QAbstractItemView::SelectRows</enum></property><property name="selectionMode"><enum>QAbstractItemView::SingleSelection</enum></property><property name="showGrid"><bool>false</bool></property><property name="horizontalScrollBarPolicy"><enum>Qt::ScrollBarAlwaysOff</enum></property><property name="minimumSize"><size><width>0</width><height>230</height></size></property><attribute name="horizontalHeaderDefaultSectionSize"><number>165</number></attribute><attribute name="horizontalHeaderStretchLastSection"><bool>true</bool></attribute><attribute name="verticalHeaderVisible"><bool>false</bool></attribute><attribute name="verticalHeaderDefaultSectionSize"><number>40</number></attribute><column><property name="text"><string>Case ID</string></property><property name="textAlignment"><set>Qt::AlignLeading|Qt::AlignVCenter</set></property></column><column><property name="text"><string>Codename</string></property><property name="textAlignment"><set>Qt::AlignLeading|Qt::AlignVCenter</set></property></column><item row="0" column="0"><property name="text"><string>0005</string></property></item><item row="0" column="1"><property name="text"><string>Blue Harbor</string></property></item><item row="1" column="0"><property name="text"><string>0009</string></property></item><item row="1" column="1"><property name="text"><string>Paper Lantern</string></property></item><item row="2" column="0"><property name="text"><string>0012</string></property></item><item row="2" column="1"><property name="text"><string>Silent Pier</string></property></item></widget></item></layout></item><item><layout class="QVBoxLayout" name="layout_209"><property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property><property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property><property name="spacing"><number>6</number></property><item><widget class="QLabel" name="qlabel_208"><property name="variant" stdset="0"><string>field</string></property><property name="text"><string>At-large suspects in this case</string></property></widget></item><item><widget class="QTableWidget" name="tblSuspects"><property name="rowCount"><number>2</number></property><property name="columnCount"><number>2</number></property><property name="editTriggers"><enum>QAbstractItemView::NoEditTriggers</enum></property><property name="selectionBehavior"><enum>QAbstractItemView::SelectRows</enum></property><property name="selectionMode"><enum>QAbstractItemView::SingleSelection</enum></property><property name="showGrid"><bool>false</bool></property><property name="horizontalScrollBarPolicy"><enum>Qt::ScrollBarAlwaysOff</enum></property><property name="minimumSize"><size><width>0</width><height>230</height></size></property><attribute name="horizontalHeaderDefaultSectionSize"><number>165</number></attribute><attribute name="horizontalHeaderStretchLastSection"><bool>true</bool></attribute><attribute name="verticalHeaderVisible"><bool>false</bool></attribute><attribute name="verticalHeaderDefaultSectionSize"><number>40</number></attribute><column><property name="text"><string>Suspect</string></property><property name="textAlignment"><set>Qt::AlignLeading|Qt::AlignVCenter</set></property></column><column><property name="text"><string>Guilty</string></property><property name="textAlignment"><set>Qt::AlignLeading|Qt::AlignVCenter</set></property></column><item row="0" column="0"><property name="text"><string>Dock Worker X</string></property></item><item row="0" column="1"><property name="text"><string>Guilty</string></property><property name="foreground"><brush brushstyle="SolidPattern"><color alpha="255"><red>207</red><green>125</green><blue>114</blue></color></brush></property></item><item row="1" column="0"><property name="text"><string>Pier Lookout</string></property></item><item row="1" column="1"><property name="text"><string>Guilty</string></property><property name="foreground"><brush brushstyle="SolidPattern"><color alpha="255"><red>207</red><green>125</green><blue>114</blue></color></brush></property></item></widget></item></layout></item></layout></item><item><widget class="QLabel" name="lblHint"><property name="variant" stdset="0"><string>hint</string></property><property name="text"><string>Only guilty suspects who have not been apprehended can be linked.</string></property></widget></item><item><layout class="QHBoxLayout" name="layout_212"><property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property><property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property><property name="spacing"><number>10</number></property><item><spacer name="spacer_211"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>20</height></size></property></spacer></item><item><widget class="QPushButton" name="btnCancel"><property name="text"><string>Cancel</string></property></widget></item><item><widget class="QPushButton" name="btnLink"><property name="variant" stdset="0"><string>primary</string></property><property name="text"><string>Link</string></property></widget></item></layout></item></layout></widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
