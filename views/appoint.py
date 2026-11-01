@@ -40,6 +40,7 @@ from __future__ import annotations
 import sys
 from typing import Iterable, Optional, Tuple
 
+
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import (
@@ -49,11 +50,14 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QTableWidget,
     QTableWidgetItem,
+    QMessageBox,
 )
+
 
 # Resolve the .ui path relative to this file so the script works from any
 # working directory.
-UI_FILE = Path(__file__).with_name("appoint_v2.ui")
+from src.utils import UI_DIR
+UI_FILE = UI_DIR / "appoint_v2.ui"
 
 # One table row: (name, role applied for, human-readable submission time).
 ApplicationRow = Tuple[str, str, str]
@@ -97,7 +101,7 @@ class AppointWindow(QMainWindow):
         super().__init__(parent)
 
         # Create all widgets from the .ui file and attach them to ``self``.
-        uic.loadUi(UI_FILE, self)
+        uic.loadUi(UI_FILE, self) # type: ignore
 
         self.setWindowTitle("Asche Yiu Police Department - Incoming Applications")
         self._connect_signals()
@@ -117,6 +121,11 @@ class AppointWindow(QMainWindow):
         # buttons' enabled state in step with the selection.
         self.tblApplications.itemSelectionChanged.connect(self._refresh_state)
 
+
+    def _clear_table(self) -> None: 
+        """ Clears the applications table """
+        self.tblApplications.clearContents()
+        self.tblApplications.setRowCount(0)
     # ---------------------------------------------------------- public helpers
     def set_applications(self, rows: Iterable[ApplicationRow]) -> None:
         """Replace the table contents with ``rows``.
@@ -171,15 +180,25 @@ class AppointWindow(QMainWindow):
         name = self._cell_text(row, COL_NAME)
         role = self._cell_text(row, COL_ROLE)
 
+        response = QMessageBox.warning(
+            self,
+            "Confirmation Box",
+            f"Are you sure you want to {"Accept" if accepted else "Reject"} this person?",
+            QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel,
+            QMessageBox.StandardButton.Cancel
+        )
+
         # Emit first, so listeners see the application while it is still on
         # screen; then remove it from the pending list.
-        if accepted:
-            self.application_accepted.emit(name, role)
-        else:
-            self.application_rejected.emit(name, role)
+        if response == QMessageBox.StandardButton.Ok:
+            if accepted :
+                self.application_accepted.emit(name, role)
+            else:
+                self.application_rejected.emit(name, role)
 
-        self.tblApplications.removeRow(row)
-        self._refresh_state()
+            self.tblApplications.removeRow(row)
+            self._refresh_state()
+        self.tblApplications.clearSelection()
 
     def _refresh_state(self) -> None:
         """Update the "N awaiting" label and enable/disable the buttons."""
@@ -199,6 +218,12 @@ def main() -> None:
     """Preview the window on its own, with simple demo handlers attached."""
     app = QApplication(sys.argv)
     window = AppointWindow()
+
+    APPLICATIONS = [
+        ("John", "Warden", "Today, 09:12"),
+        ("Jngle", "Detective", "Yesterday 17:40")
+    ]
+    window.set_applications(APPLICATIONS)
 
     window.application_accepted.connect(lambda n, r: print(f"Accepted: {n} ({r})"))
     window.application_rejected.connect(lambda n, r: print(f"Rejected: {n} ({r})"))
