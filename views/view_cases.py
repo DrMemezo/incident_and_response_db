@@ -17,6 +17,7 @@ from PyQt6.QtWidgets import (
     QComboBox
 )
 
+from src.utils import toi_to_str, format_caseid
 # TODO: Make search feature functional
 
 # Resolve the .ui path relative to this file so the script works from any
@@ -60,19 +61,6 @@ class CaseSummary(NamedTuple):
     status: str
     version: str
     time_of_incident: str
-
-
-def _toi_to_str( toi:dt.datetime|str) -> str:
-    if type(toi) == str:
-        return toi
-
-    return toi.strftime(TIME_FORMAT) # type: ignore
-
-def _format_caseid(caseid: int|str) -> str:
-    if type(caseid) == str:
-        return caseid 
-
-    return f"{caseid:04d}"
 
 class ViewCases(QMainWindow):
     """ View all cases in the database
@@ -189,7 +177,7 @@ class ViewCases(QMainWindow):
             row = table.rowCount()
             table.insertRow(row)
 
-            table.setItem(row, COL_CASEID, QTableWidgetItem(_format_caseid(caseid)))
+            table.setItem(row, COL_CASEID, QTableWidgetItem(format_caseid(caseid)))
 
             table.setItem(row, COL_CODENAME, QTableWidgetItem(codename))
  
@@ -201,7 +189,7 @@ class ViewCases(QMainWindow):
             table.setItem(row, COL_STATUS, status_item)
  
             table.setItem(row, COL_VERSION, QTableWidgetItem(str(vers)))
-            table.setItem(row, COL_TIME_OF_INCIDENT, QTableWidgetItem(_toi_to_str(toi)))
+            table.setItem(row, COL_TIME_OF_INCIDENT, QTableWidgetItem(toi_to_str(toi)))
 
 
     def _selected_row(self) -> Optional[int]:
