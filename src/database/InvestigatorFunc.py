@@ -1,6 +1,5 @@
 from src.utils import DATABASE_DIR
 import sqlite3
-import questionary
 
 def CreateCase():
     conn = sqlite3.connect(DATABASE_DIR)

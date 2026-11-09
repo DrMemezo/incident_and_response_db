@@ -1,6 +1,5 @@
 from src.utils import DATABASE_DIR
 import sqlite3
-import questionary
 
 def makeArrestCase():
     conn = sqlite3.connect(DATABASE_DIR)
