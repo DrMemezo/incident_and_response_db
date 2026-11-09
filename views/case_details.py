@@ -21,6 +21,7 @@ from PyQt6.QtWidgets import (
 )
 
 from src.utils import UI_DIR, toi_to_str, format_caseid, TIME_FORMAT
+from src.case_file_opener import open_with_default_app
 UI_FILE = UI_DIR / "case_details_v2.ui"
 
 
@@ -54,8 +55,6 @@ TEXT_COLORS = {
 }
 
 
-# TODO: Add hidden filepath to each file in the list.
-# TODO: Then when user doubleclicks, open with prefered app.
 # Role used to store a case file's full path on its list item.
 FILE_PATH_ROLE = Qt.ItemDataRole.UserRole
 
@@ -143,7 +142,9 @@ class CaseDetails(QMainWindow):
         self.btnBack.clicked.connect(self.back_requested)
         self.btnLinkSuspect.clicked.connect(self.link_suspect_requested)
         self.btnEditCase.clicked.connect(self.edit_case_requested)
-
+        self.lstCaseFiles.itemDoubleClicked.connect(
+            lambda item: open_with_default_app(Path(item.data(FILE_PATH_ROLE)), self)
+        )
     def set_editable(self, editable: bool) -> None:
         """Switch between the editable and read-only versions of the view.
 
@@ -212,7 +213,8 @@ class CaseDetails(QMainWindow):
         stores its full path, so it can be opened later."""
         self.lstCaseFiles.clear()
         for path in (Path(p) for p in paths):
-            item = QListWidgetItem(path.name)
+            # Gets the final path name. So path/to/data/data.pdf becomes data.pdf
+            item = QListWidgetItem(path.name) 
             item.setData(FILE_PATH_ROLE, str(path))
             item.setToolTip(str(path))
             self.lstCaseFiles.addItem(item)
@@ -253,6 +255,7 @@ def main() -> None:
         "files/scene_report.pdf",
         "files/witness_statements.pdf",
         "files/cctv_dock3.mp4",
+        R"D:\OneDrive - Habib University\Fall 2026\DB SYS --- CS 355\Project\incident_and_response_db\docs\incident_response_v3.pdf"
     ])
 
     window.set_editable("--edit" in sys.argv)
