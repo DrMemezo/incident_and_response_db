@@ -1,47 +1,35 @@
 from src.utils import DATABASE_DIR
 import sqlite3
-import questionary
 
-def submitTempCase():
+def submitTempCase(time, codename):
     conn = sqlite3.connect(DATABASE_DIR)
     cursor = conn.cursor()
-
-    time = questionary.text("").ask()
-    codename = questionary.text("").ask()
 
     cursor.execute("INSERT INTO Cases (TimeofIncident,CodeName,Status)Values (?)(?)('Pending')", (time, codename,))
     conn.commit()
     conn.close()
 
 
-def submitMinorVer():
+
+def submitMinorVer(ID, filepath, minorver):
     conn = sqlite3.connect(DATABASE_DIR)
     cursor = conn.cursor()
-
-    ID = questionary.text("").ask()
-    filepath = questionary.text("").ask()
-    minorver = questionary.text("").ask()
 
     cursor.execute("INSERT INTO CasesFiles (Minorver, Filepath) Values (?) WHERE CaseID = ?", (minorver, filepath, ID,))
     conn.commit()
+    conn.close()
 
-def createSuspect():
+def createSuspect(Codename, photofilepath):
     conn = sqlite3.connect(DATABASE_DIR)
     cursor = conn.cursor()
-
-    Codename = questionary.text("").ask()
-    photofilepath = questionary.text("").ask()
 
     cursor.execute("INSERT INTO Suspects (CodeName, Photo, Guility, Apprehended) Values (?,?,FALSE,'At Large')", (Codename, photofilepath,))
     conn.commit()
     conn.close()
 
-def LinkSuspectCase():
+def LinkSuspectCase(CaseID, SuspectID):
     conn = sqlite3.connect(DATABASE_DIR)
     cursor = conn.cursor()
-
-    CaseID = questionary.text("").ask()
-    SuspectID = questionary.text("").ask()
 
     cursor.execute("INSERT INTO CasesSuspects (CaseID, SuspectID) Values (?,?)", (CaseID, SuspectID,))
     conn.commit()
