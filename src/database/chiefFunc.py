@@ -2,6 +2,8 @@ from src.utils import DATABASE_DIR
 import sqlite3
 
 # getters (to add, to reject) are temp, in real implementation get this from whichever column the chief clicks on using signals. idk how to do it any other way yet
+# TODO: Remove everything related to questionary
+# TODO: 
 
 def accept_requestChief(to_add):
     conn = sqlite3.connect(DATABASE_DIR)
