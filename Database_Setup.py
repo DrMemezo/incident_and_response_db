@@ -8,7 +8,7 @@ def adding_chief():
   cursor = conn.cursor()
 
   cursor.execute("""
-        CREATE TABLE IF NOT EXISTS Staff (
+        CREATE TABLE IF NOT EXIST Staff (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             Name TEXT NOT NULL,
             Title TEXT NOT NULL,
