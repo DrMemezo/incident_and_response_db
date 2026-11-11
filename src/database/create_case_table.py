@@ -9,10 +9,8 @@ def create_case_table():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Cases (
         case_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        lead_investigator_id INTEGER
         code VARCHAR UNIQUE NOT NULL,
         status TEXT DEFAULT 'Open',
         time_of_incident TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (lead_investigator_id) REFERENCES Staff(staff_id)
     )
     """)
