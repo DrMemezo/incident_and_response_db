@@ -30,15 +30,33 @@ def submit_request(name:str, title:str, passw:str):
     )
 
     conn.commit()
+    conn.close()
 
 #TODO:
-def check_registration_denied():
+def check_registration_denied(name, passw):
     with sqlite3.connect(DATABASE_DIR) as conn:
         cursor = conn.cursor()
+        cursor.execute("SELECT RegistrationStatus FROM Staff WHERE Name = (?) AND PasswordHash = ?", (name, get_pass_hash(passw))
+                       )
+        result = cursor.fetchone()
+        conn.close()
+
+    if not result:
+        return("You have been denied!")
+    
+    
 
 #TODO:
-def delete_denied_registration():
-    ...
+def delete_denied_registration(name, passw):
+    with sqlite3.connect(DATABASE_DIR) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT RegistrationStatus FROM Staff WHERE Name = (?) AND PasswordHash = ?", (name, get_pass_hash(passw))
+                           )
+            result = cursor.fetchone()
+
+            if result and result[0] == REJECTED:
+                cursor.execute("DELETE FROM Staff WHERE Name = (?) AND PasswordHash = ?", (name, get_pass_hash(passw)))
+                conn.commit()
 
 def is_accepted(name:str, passw:str) -> bool:
     with sqlite3.connect(DATABASE_DIR) as conn:

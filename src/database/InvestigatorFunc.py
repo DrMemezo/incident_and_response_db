@@ -1,5 +1,10 @@
+from pathlib import Path
+import shutil
 from src.utils import DATABASE_DIR
 import sqlite3
+
+
+REPO_ROOT = Path(__file__).resolve().parent
 
 def CreateCase(time, codename, filepath, ID, majorver):
     conn = sqlite3.connect(DATABASE_DIR)

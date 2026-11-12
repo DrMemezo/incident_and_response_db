@@ -1,4 +1,4 @@
-from src.utils import DATABASE_DIR, get_pass_hash
+from src.utils import DATABASE_DIR
 import sqlite3
 
 
