@@ -1,35 +1,3 @@
-"""
-register_v2.py - Application (registration) form for the Asche Yiu Police
-Department application.
-
-Loads ``register_v2.ui`` and adds validation and a signal that hands the
-completed application to the rest of the program.
-
-How it fits in the application flow
------------------------------------
-    login.py  --(Apply to Join)-->  register_v2.py
-                                        |
-                                        | application_submitted(name, password, role)
-                                        v
-                          register_submitted.py  (confirmation screen)
-
-After the Chief reviews the application (see ``appoint_v2.py``) the applicant
-will eventually see either the "submitted" or the "denied" status screen.
-
-Widgets defined in register_v2.ui
----------------------------------
-    edtName               QLineEdit    - applicant's name
-    edtPassword           QLineEdit    - chosen password (masked)
-    cmbRole               QComboBox    - Fieldworker / Detective / Warden
-    btnSubmitApplication  QPushButton  - primary action
-
-Run this file directly to preview the window:
-
-    python register_v2.py
-"""
-
-from __future__ import annotations
-
 import sys
 
 from PyQt6 import uic
@@ -62,19 +30,21 @@ class RegisterWindow(QMainWindow):
     """
 
     application_submitted = pyqtSignal(str, str, str)
+    login_requested = pyqtSignal()
 
     # Type hints for widgets created by ``uic.loadUi`` (auto-complete only).
     edtName: QLineEdit
     edtPassword: QLineEdit
     cmbRole: QComboBox
     btnSubmitApplication: QPushButton
+    btnLoginInstead: QPushButton
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
 
         # Create all widgets from the .ui file and attach them to ``self``.
         # The shared style sheet inside the file is applied at the same time.
-        uic.loadUi(UI_FILE, self)
+        uic.loadUi(UI_FILE, self) #type:ignore
 
         self.setWindowTitle("Asche Yiu Police Department - Application")
         self._connect_signals()
@@ -83,6 +53,7 @@ class RegisterWindow(QMainWindow):
     def _connect_signals(self) -> None:
         """Wire widget events to the handler methods below."""
         self.btnSubmitApplication.clicked.connect(self._on_submit_clicked)
+        self.btnLoginInstead.clicked.connect(self.login_requested)
 
         # Enter in the name field moves on to the password field; Enter in
         # the password field submits (the combo box is skipped on purpose,
@@ -98,16 +69,19 @@ class RegisterWindow(QMainWindow):
         role = self.selected_role()
 
         if not name:
-            self._show_error("Please enter your name.")
+            self.show_error("Please enter your name.")
             self.edtName.setFocus()
             return
         if not password:
-            self._show_error("Please choose a password.")
+            self.show_error("Please choose a password.")
             self.edtPassword.setFocus()
             return
 
-        # Any further rules (minimum length, duplicate names, ...) are
-        # business logic and belong to the code that receives the signal.
+        #TODO: If there is any other rule needed to be added add them here
+
+        self.edtName.clear()
+        self.edtPassword.clear()
+
         self.application_submitted.emit(name, password, role)
 
     # ---------------------------------------------------------- public helpers
@@ -122,7 +96,7 @@ class RegisterWindow(QMainWindow):
         self.cmbRole.setCurrentIndex(0)
         self.edtName.setFocus()
 
-    def _show_error(self, message: str) -> None:
+    def show_error(self, message: str) -> None:
         """Show a validation warning dialog."""
         QMessageBox.warning(self, "Application", message)
 

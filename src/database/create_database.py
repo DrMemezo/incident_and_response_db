@@ -7,8 +7,8 @@ from src.database.definition.create_alters_table import create_alters_table
 from src.database.definition.create_linked_table import create_linked_table 
 from src.database.definition.create_arrestfromcase_table import create_ArrestFromCase_table 
 
+def create_database():
 
-if __name__ == "__main__":
     create_staff_table()
     create_case_table()
     create_suspect_table()
@@ -17,3 +17,6 @@ if __name__ == "__main__":
     create_alters_table()
     create_linked_table()
     create_ArrestFromCase_table()
+
+if __name__ == "__main__":
+    create_database()

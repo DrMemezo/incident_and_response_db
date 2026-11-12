@@ -1,47 +1,3 @@
-"""
-dashboard_chief.py - Main dashboard shown to the Police Chief after logging in.
-
-Loads ``dashboard_chief.ui``. The screen has two parts:
-
-* a **staff card** at the top (avatar with initials, name, role + Staff ID, and
-  a "Pending applications" counter), and
-* a grid of **action tiles** (View Cases, Open Case, Review Requests, ...).
-
-This module adds
-----------------
-* Methods to change what the staff card shows::
-
-      dashboard.set_staff_name("Sarah Yiu")       # also updates the avatar initials
-      dashboard.set_staff_id(1)                   # shown as "0001"
-      dashboard.set_pending_applications(3)
-
-  or all three at once::
-
-      dashboard.update_info("Sarah Yiu", 1, 3)
-
-* One signal per button. The dashboard never opens other windows itself; it
-  only announces what the user clicked. Whatever owns the dashboard (see
-  ``dashboard_demo.py``) connects to those signals and decides what to show.
-
-Widgets defined in dashboard_chief.ui
--------------------------------------
-    lblAvatar          QLabel   - round badge with the staff member's initials
-    lblStaffName       QLabel   - e.g. "Sarah Yiu"
-    lblStaffRole       QLabel   - e.g. "Police Chief  ·  Staff ID 0001"
-    lblStatLabel       QLabel   - "Pending applications" (static caption)
-    lblStatValue       QLabel   - the big gold number
-    btnViewCases, btnOpenCase, btnCreateSuspect,
-    btnReviewRequests, btnAssignCase, btnAppointStaff,
-    btnCloseCase       QPushButton - action tiles
-    btnLogout          QPushButton - log out
-
-Run this file directly to preview the window:
-
-    python dashboard_chief.py
-"""
-
-from __future__ import annotations
-
 import sys
 from typing import Union
 
@@ -49,18 +5,12 @@ from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton
 
-# Resolve the .ui path relative to this file so the script works from any
-# working directory.
 from src.utils import UI_DIR
 UI_FILE = UI_DIR / "dashboard_chief.ui"
 
-# The title printed before the Staff ID. It is fixed for this dashboard
-# (it is the *Chief's* dashboard), so it is a constant rather than a parameter.
 ROLE_TITLE = "Police Chief"
 
-# The role line in the .ui file separates title and ID with a middle dot
-# surrounded by two spaces on each side. Keeping it in one place means the
-# format can be changed easily.
+#this is the weird dot thing in between the ID and the title
 ROLE_SEPARATOR = "  \u00b7  "  # "  ·  "
 
 
@@ -69,7 +19,6 @@ class ChiefDashboardWindow(QMainWindow):
 
     Signals
     -------
-    One no-argument signal per button, named after what the user wants to do:
 
         view_cases_requested        View Cases
         open_case_requested         Open Case
@@ -90,7 +39,7 @@ class ChiefDashboardWindow(QMainWindow):
     close_case_requested = pyqtSignal()
     logout_requested = pyqtSignal()
 
-    # Type hints for widgets created by ``uic.loadUi`` (auto-complete only).
+    # Type hints
     lblAvatar: QLabel
     lblStaffName: QLabel
     lblStaffRole: QLabel
@@ -113,10 +62,7 @@ class ChiefDashboardWindow(QMainWindow):
 
         self.setWindowTitle("Asche Yiu Police Department - Dashboard")
 
-        # The role line shows "<title> · Staff ID <id>", but the name, ID and
-        # count can be changed independently. The ID is therefore remembered
-        # here so ``set_staff_id`` / ``set_staff_name`` can rebuild the label.
-        # The initial value is the design-time sample data from the .ui file.
+        #Placeholder
         self._staff_id = "0001"
 
         self._connect_signals()
@@ -124,9 +70,7 @@ class ChiefDashboardWindow(QMainWindow):
     # ------------------------------------------------------------------ setup
     def _connect_signals(self) -> None:
         """Re-emit every button click as a meaningful, named signal."""
-        # Passing a signal to ``connect`` forwards the call, so a click on the
-        # button simply triggers the matching signal. ``clicked`` also carries
-        # a ``checked`` bool, which is harmless for a no-argument signal.
+
         self.btnViewCases.clicked.connect(self.view_cases_requested)
         self.btnOpenCase.clicked.connect(self.open_case_requested)
         self.btnCreateSuspect.clicked.connect(self.create_suspect_requested)
@@ -136,7 +80,6 @@ class ChiefDashboardWindow(QMainWindow):
         self.btnCloseCase.clicked.connect(self.close_case_requested)
         self.btnLogout.clicked.connect(self.logout_requested)
 
-    # --------------------------------------------------- public update methods
     def update_info(
         self,
         name: str,
@@ -211,7 +154,7 @@ class ChiefDashboardWindow(QMainWindow):
 def main() -> None:
     """Preview the window on its own, printing every button press."""
 
-    NAME = "JINGLE SLIMER JIMER"
+    NAME = "JOHN JOHNSToN"
     S_ID = 3
     NUM_APPLICATIONS = 10
     

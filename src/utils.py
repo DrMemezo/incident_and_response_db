@@ -1,5 +1,6 @@
 from pathlib import Path 
 import datetime as dt
+import hashlib
 
 
 ROOT_DIR = Path(__file__).parent.parent
@@ -8,6 +9,10 @@ UI_V1_DIR = ROOT_DIR / "v1"
 
 DATABASE_DIR = ROOT_DIR / "police.db"
 TIME_FORMAT = "%d/%m/%Y %H:%M"
+
+
+def get_pass_hash(password:str) -> str:
+    return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
 def toi_to_str(toi:dt.datetime|str) -> str:
     if type(toi) == str:
