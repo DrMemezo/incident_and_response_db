@@ -30,7 +30,6 @@ def submit_request(name:str, title:str, passw:str):
     conn.commit()
     conn.close()
 
-#TODO:
 def check_registration_denied(name, passw):
     with sqlite3.connect(DATABASE_DIR) as conn:
         cursor = conn.cursor()
@@ -40,11 +39,8 @@ def check_registration_denied(name, passw):
         conn.close()
 
     if not result:
-        return("You have been denied!")
-    
-    
+        return("You have been denied!")    
 
-#TODO:
 def delete_denied_registration(name, passw):
     with sqlite3.connect(DATABASE_DIR) as conn:
             cursor = conn.cursor()
