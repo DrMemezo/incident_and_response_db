@@ -31,9 +31,14 @@ def submit_request(name:str, title:str, passw:str):
 
     conn.commit()
 
+#TODO:
 def check_registration_denied():
     with sqlite3.connect(DATABASE_DIR) as conn:
         cursor = conn.cursor()
+
+#TODO:
+def delete_denied_registration():
+    ...
 
 def is_accepted(name:str, passw:str) -> bool:
     with sqlite3.connect(DATABASE_DIR) as conn:
