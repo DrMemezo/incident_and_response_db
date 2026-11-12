@@ -1,11 +1,9 @@
 import sqlite3
-from src.utils import DATABASE_DIR, get_pass_hash
+from src.utils import DATABASE_DIR, get_pass_hash, PENDING, ACCEPTED, REJECTED
 
 from typing import Optional
 
-ACCEPTED = "Accepted"
-REJECTED = "Rejected"
-PENDING = "Pending"
+
 
 def check_for_same_name(name:str):
     """Checks if there is a staff member with the same name already"""

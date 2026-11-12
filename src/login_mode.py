@@ -9,7 +9,6 @@ from src.database.registration_functions import *
 from PyQt6.QtCore import pyqtSignal
 
 class LoginMode(Mode):
-    login_successful = pyqtSignal(int, str, str) # Staff Id, Name, Title
     
     def start(self):
     
@@ -49,7 +48,7 @@ class LoginMode(Mode):
             return
         s_id, _, title = result
 
-        self.login_successful.emit(int(s_id), name, title)
+        self.finished.emit(( int(s_id), name, title ))
 
 
         

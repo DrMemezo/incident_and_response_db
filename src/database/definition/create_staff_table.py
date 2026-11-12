@@ -2,6 +2,7 @@ from src.utils import DATABASE_DIR
 import sqlite3
 
 # TODO: How do we know which chief appointed?
+# TODO: Registration time is missing
 def create_staff_table():
 
   conn = sqlite3.connect(DATABASE_DIR)
