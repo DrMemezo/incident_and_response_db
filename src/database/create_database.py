@@ -9,7 +9,9 @@ from src.database.definition.create_arrestfromcase_table import create_ArrestFro
 
 def create_database():
 
+
     create_staff_table()
+    
     create_case_table()
     create_suspect_table()
     create_arrested_table()

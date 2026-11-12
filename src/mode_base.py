@@ -4,7 +4,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 
 
 class Mode(QObject):
-    finished = pyqtSignal()        # emitted when the flow ends (done or cancelled)
+    finished = pyqtSignal(object)        # emitted when the flow ends (done or cancelled)
 
     def __init__(self, stack: QStackedWidget):
         super().__init__()
@@ -20,6 +20,9 @@ class Mode(QObject):
         self.stack.setCurrentWidget(widget)
 
     def start(self):
+        raise NotImplementedError
+
+    def finish(self):
         raise NotImplementedError
 
     def teardown(self):

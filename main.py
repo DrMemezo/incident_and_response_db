@@ -15,14 +15,15 @@ class MainWindow(QMainWindow):
         self.mode: Mode | None = None
         self.enter_mode(LoginMode)
 
+
     def enter_mode(self, mode_cls):
         if self.mode is not None:          # only one active mode at a time
             self.exit_mode()
         self.mode = mode_cls(self.stack)
-        self.mode.finished.connect(self.exit_mode) # type: ignore
+        self.mode.finished.connect(lambda x : self.exit_mode(x)) # type: ignore
         self.mode.start() # type: ignore
 
-    def exit_mode(self):
+    def exit_mode(self, something=None):
         if self.mode is None:
             return
         self.mode.teardown()
