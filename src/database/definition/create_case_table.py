@@ -11,6 +11,6 @@ def create_case_table():
         case_id INTEGER PRIMARY KEY AUTOINCREMENT,
         code VARCHAR UNIQUE NOT NULL,
         status TEXT DEFAULT 'Open',
-        time_of_incident TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    )
+        time_of_incident TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
     """)

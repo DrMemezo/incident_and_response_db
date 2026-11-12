@@ -15,6 +15,6 @@ def create_arrested_table():
             Weight Float,
             Front_Profile BLOB,
             Side_Profile BLOB,
-            arrest_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            arrest_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     """)

@@ -3,30 +3,47 @@ import hashlib
 import sqlite3
 import questionary
 
-from src.database.create_staff_table import create_staff_table
+from src.database.definition.create_staff_table import create_staff_table
 
 def add_chief():
   conn = sqlite3.connect(DATABASE_DIR)
   cursor = conn.cursor()
 
   cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Staff';")
-  table_exists = cursor.fetchone();
+  table_exists = cursor.fetchone()
 
   if not table_exists:
     conn.close()
     raise ValueError("The staff table has not been created yet.")  
-  conn.commit()
 
   print("=== Add Police Chief ===")
 
   name = questionary.text("Enter the Chief's name:").ask()
+
+  if not name:
+    print("[Error] Name cannot be empty.")
+    conn.close()
+    return
+
+  cursor.execute("SELECT * FROM Staff WHERE Name=?", 
+                 (name,)) # To make sure no one else has the same name
+  name_already_there = cursor.fetchone()
+
+  if name_already_there is not None:
+    print("[Error] Choose a different name.")
+    conn.close()
+    return
+
+
   password = questionary.password("Enter the Chief's password:").ask()
 
   # Validate that inputs are not empty
-  if not name or not password:
-    print("[Error] Name and password cannot be empty.")
+  if not password:
+    print("[Error] Password cannot be empty.")
     conn.close()
     return
+
+
 
   password_hash = hashlib.sha256(password.encode("utf-8")).hexdigest()
 
@@ -50,6 +67,9 @@ def add_chief():
   )
 
   conn.close()
+
+
+
 # !!!!! DEPRECATED !!!!
 def adding_chief():
   """ DEPRECATED. Dont use """
