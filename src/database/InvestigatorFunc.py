@@ -1,5 +1,12 @@
+from pathlib import Path
+import shutil
 from src.utils import DATABASE_DIR
 import sqlite3
+
+
+REPO_ROOT = Path(__file__).resolve().parent
+APPROVED_DIR = (
+    REPO_ROOT / "data")  
 
 def CreateCase(time, codename, filepath, ID, majorver):
     conn = sqlite3.connect(DATABASE_DIR)
@@ -10,13 +17,35 @@ def CreateCase(time, codename, filepath, ID, majorver):
     conn.commit()
     conn.close()
 
-def acceptMinorVer(ID, minorver):
+#unfinished, need to finish this
+def acceptMinorVer(ID, filepath):
     conn = sqlite3.connect(DATABASE_DIR)
     cursor = conn.cursor()
 
+    #need to implement the code for getting the data from the minor version temp directory
+    cursor.execute(
+      "SELECT Filepath FROM CasesFiles WHERE CaseID = ? AND Minorver IS NOT"
+      " NULL ORDER BY Minorver DESC LIMIT 1",
+      (ID,),
+  )
+    temp_row = cursor.fetchone()
 
-    cursor.execute("INSERT INTO CasesFiles (Majorver, Caseid, Filepath) Values (SELECT Majorver, Caseid, Filepath FROM CasesFiles WHERE CaseID = ? AND Minorver = ?)", (ID, minorver,))
-    cursor.execute("DELETE FROM CasesFiles WHERE CaseID = ? AND Minorver = ?", (ID, minorver,))
+    if temp_row is None:
+        print(f"No pending minor version found for Case {ID}.")
+        conn.close()
+        return
+
+    temp_filepath = temp_row[0]
+
+    # Move the file from the temp directory to the approved directory
+    shutil.move(temp_filepath, APPROVED_DIR / Path(temp_filepath).name)
+
+    #get last majorversion of this case
+    cursor.execute("SELECT Majorver FROM CasesFiles WHERE CaseID = (?) ORDER BY Majorver DESC LIMIT 1", (ID,))
+    majorver = int(cursor.fetchone()[0])
+    majorver = float(round((majorver + 1), 1))
+
+    cursor.execute("INSERT INTO CasesFiles (Majorver, Caseid, Filepath) Values (?, ?, ?)", (majorver, ID, filepath,))
     conn.commit()
     conn.close()
 
