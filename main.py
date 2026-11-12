@@ -23,13 +23,13 @@ class MainWindow(QMainWindow):
         if result is None:
             return
         if result["title"] == CHIEF:
-            self.enter_mode(ChiefMode, lambda *x : print("idk"), 
+            self.enter_mode(ChiefMode, self._after_logout, 
                         name=result["name"], s_id=result["s_id"])
         else:
             raise NotImplementedError
         
     # TODO: Fix logout
-    def _after_logout(self, *args):
+    def _after_logout(self, *args, **kwargs):
         self.enter_mode(LoginMode, self._after_login)
 
     def enter_mode(self, mode_cls, on_finish, **kwargs):
