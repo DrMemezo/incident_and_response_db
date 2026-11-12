@@ -1,40 +1,3 @@
-"""
-
-TODO: Remove this slop
-appoint_v2.py - "Incoming applications" screen where the Chief reviews
-pending applications and accepts or rejects them.
-
-Loads ``appoint_v2.ui`` and adds the table handling and decision logic.
-
-How it fits in the application flow
------------------------------------
-    register_v2.py --> (application stored by your backend) --> appoint_v2.py
-                                                                    |
-                                  Accept -> application_accepted(name, role)
-                                  Reject -> application_rejected(name, role)
-
-Like the other windows, this one does not touch a database. It displays the
-rows it is given, removes a row when the Chief decides on it, and announces
-the decision through a signal so the backend can persist it (and so the
-applicant later sees ``register_submitted`` / ``register_denied``).
-
-Widgets defined in appoint_v2.ui
---------------------------------
-    lblTitle         QLabel        - "Incoming applications:"
-    lblPendingCount  QLabel        - "N awaiting your decision"
-    tblApplications  QTableWidget  - 3 columns: Name | Applying as | Submitted
-    btnAccept        QPushButton   - accept the selected application
-    btnReject        QPushButton   - reject the selected application
-    btnBack          QPushButton   - leave this screen
-
-The three rows that are in the .ui file are only design-time sample data. Call
-``set_applications()`` to replace them with real data.
-
-Run this file directly to preview the window:
-
-    python appoint_v2.py
-"""
-
 from __future__ import annotations
 
 import sys
@@ -160,7 +123,7 @@ class AppointWindow(QMainWindow):
         The table uses single-row selection (set in the .ui file), so at most
         one row can be selected at a time.
         """
-        rows = self.tblApplications.selectionModel().selectedRows()
+        rows = self.tblApplications.selectionModel().selectedRows() # type: ignore
         return rows[0].row() if rows else None
 
     def _cell_text(self, row: int, column: int) -> str:
