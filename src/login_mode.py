@@ -26,7 +26,7 @@ class LoginMode(Mode):
         self.register_view.login_requested.connect(lambda : self._to_login())
 
         self.register_view.application_submitted.connect( lambda name, passw, role : self._add_registered(name, passw, role))   
-        self.login_view.login_requested.connect(lambda name, passw : self._attempt_login(name, passw))    
+        self.login_view.login_requested.connect(lambda name, passw : self.attempt_login(name, passw))    
 
     def _to_register(self):
         self.show(self.register_view)
@@ -41,16 +41,10 @@ class LoginMode(Mode):
 
        submit_request(name, role, passw)
 
-    def _attempt_login(self, name, passw):
+    def attempt_login(self, name, passw):
         result = get_staff_info(name, passw) # If the user is an accepted member of staff
         if not result:
             self.login_view.show_error("Invalid Login!")
             return
         s_id, _, title = result
-
-        self.finished.emit(( int(s_id), name, title ))
-
-
-        
-
-    
+        self.finished.emit({"s_id": int(s_id), "name": name, "title": title})

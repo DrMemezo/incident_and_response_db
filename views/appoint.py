@@ -60,6 +60,8 @@ class AppointWindow(QMainWindow):
     btnReject: QPushButton
     btnBack: QPushButton
 
+    applications = []
+
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
 
@@ -177,6 +179,7 @@ class AppointWindow(QMainWindow):
         self.btnReject.setEnabled(has_selection)
 
 
+# TODO: Add a hidden data layer or ID column for ID
 def main() -> None:
     """Preview the window on its own, with simple demo handlers attached."""
     app = QApplication(sys.argv)
