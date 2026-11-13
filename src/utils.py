@@ -10,6 +10,8 @@ UI_V1_DIR = ROOT_DIR / "v1"
 DATABASE_DIR = ROOT_DIR / "police.db"
 TIME_FORMAT = "%d/%m/%Y %H:%M"
 
+DOT = "\u00b7"
+
 ACCEPTED = "Accepted"
 REJECTED = "Rejected"
 PENDING = "Pending"
