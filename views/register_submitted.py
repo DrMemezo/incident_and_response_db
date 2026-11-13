@@ -1,27 +1,3 @@
-"""
-register_submitted.py - "Application Submitted" confirmation screen.
-
-Shown right after an applicant submits the form in ``register_v2.py``. It is a
-simple status screen: a gold check-mark, a title, an explanatory message and a
-single *Back to Login* button.
-
-Widgets defined in register_submitted.ui
-----------------------------------------
-    lblIcon         QLabel       - the gold check-mark badge
-    lblTitle        QLabel       - "Application Submitted"
-    lblMessage      QLabel       - explanatory text (word-wrapped)
-    btnBackToLogin  QPushButton  - primary action, returns to the login screen
-
-Its sibling screen is ``register_denied.py``, which uses the same layout with
-a red cross and a rejection message.
-
-Run this file directly to preview the window:
-
-    python register_submitted.py
-"""
-
-from __future__ import annotations
-
 import sys
 
 from PyQt6 import uic

@@ -1,28 +1,3 @@
-"""
-register_denied.py - "Application Rejected" screen.
-
-Shown to an applicant whose application the Chief declined (see the *Reject*
-button in ``appoint_v2.py``). It mirrors ``register_submitted.py``: same
-layout, but with a red cross badge and a rejection message.
-
-Widgets defined in register_denied.ui
--------------------------------------
-    lblIcon         QLabel       - the red cross badge
-    lblTitle        QLabel       - "Application Rejected"
-    lblMessage      QLabel       - explanatory text (word-wrapped)
-    btnBackToLogin  QPushButton  - secondary-style button, returns to login
-
-Note: unlike the "submitted" screen, this button deliberately has no
-``variant="primary"`` property, so it is drawn in the neutral button style
-instead of the gold highlight - there is no positive action to encourage.
-
-Run this file directly to preview the window:
-
-    python register_denied.py
-"""
-
-from __future__ import annotations
-
 import sys
 
 from PyQt6 import uic

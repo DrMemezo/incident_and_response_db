@@ -11,8 +11,6 @@ from PyQt6.QtWidgets import (
     QPushButton,
 )
 
-# Resolve the .ui path relative to this file so the script works from any
-# working directory.
 from src.utils import UI_DIR
 UI_FILE = UI_DIR / "register_v2.ui"
 
