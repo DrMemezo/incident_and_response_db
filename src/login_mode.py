@@ -6,6 +6,7 @@ from views.register_denied import RegisterDeniedWindow
 from views.register_submitted import RegisterSubmittedWindow
 
 from src.database.registration_functions import *
+from src.utils import PENDING, REJECTED
 from PyQt6.QtCore import pyqtSignal
 
 class LoginMode(Mode):
@@ -25,8 +26,10 @@ class LoginMode(Mode):
         self.login_view.register_requested.connect(lambda : self._to_register())
         self.register_view.login_requested.connect(lambda : self._to_login())
 
-        self.register_view.application_submitted.connect( lambda name, passw, role : self._add_registered(name, passw, role))   
-        self.login_view.login_requested.connect(lambda name, passw : self.attempt_login(name, passw))    
+        self.register_view.application_submitted.connect( lambda name, passw, role : self._add_registered(name, passw, role)) 
+        self.login_view.login_requested.connect(lambda name, passw : self.attempt_login(name, passw))
+        self.register_accepted_view.back_to_login_requested.connect(lambda : self._to_login())
+        self.register_denied_view.back_to_login_requested.connect(lambda : self._to_login())
 
     def _to_register(self):
         self.show(self.register_view)
