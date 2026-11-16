@@ -18,11 +18,10 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-from src.utils import UI_DIR, DOT
+from src.utils import UI_DIR, DOT, APP_NAME
 
 UI_FILE = UI_DIR / "review_versions.ui"
 
-APP_NAME = "Asche Yiu Police Department"
 
 # Role used to store a version number on its list item.
 VERSION_ROLE = Qt.ItemDataRole.UserRole
