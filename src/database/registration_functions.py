@@ -79,3 +79,17 @@ def get_staff_info(name:str, passw:str) -> Optional[ tuple[str, str, str] ]:
         x = cursor.fetchone()
 
     return x
+
+def get_registration_status(name, passw):
+    conn = sqlite3.connect(DATABASE_DIR)
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT RegistrationStatus FROM Staff WHERE Name = ? AND PasswordHash = ?",
+        (name, get_pass_hash(passw)),
+    )
+    row = cursor.fetchone()
+    conn.close()
+
+    if row is None:
+        return None
+    return row[0]

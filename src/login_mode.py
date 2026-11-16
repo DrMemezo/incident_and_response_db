@@ -28,8 +28,8 @@ class LoginMode(Mode):
 
         self.register_view.application_submitted.connect( lambda name, passw, role : self._add_registered(name, passw, role)) 
         self.login_view.login_requested.connect(lambda name, passw : self.attempt_login(name, passw))
-        self.register_accepted_view.back_to_login_requested.connect(lambda : self._to_login())
-        self.register_denied_view.back_to_login_requested.connect(lambda : self._to_login())
+        self.register_accepted_view.back_to_login_requested.connect(self._to_login)
+        self.register_denied_view.back_to_login_requested.connect(self._to_login)
 
     def _to_register(self):
         self.show(self.register_view)
@@ -49,21 +49,18 @@ class LoginMode(Mode):
 
         if status is None:
             self.login_view.show_error("Invalid Login!")
-            return
 
-        if status == PENDING:
+        elif status == PENDING:
             self.register_accepted_view.set_message(
-                f"Your application, {name}, is still pending review."
+                "Your application, " + name + ", is still pending review."
             )
             self.show(self.register_accepted_view)
-            return
 
-        if status == REJECTED:
+        elif status == REJECTED:
             self.register_denied_view.set_message("Your application was rejected.")
             self.show(self.register_denied_view)
-            return
 
-        # Here if it is ACCEPTED.
-        result = get_staff_info(name, passw)
-        s_id, _, title = result
-        self.finished.emit({"s_id": int(s_id), "name": name, "title": title})
+        else:
+            result = get_staff_info(name, passw)
+            s_id, name, title = result
+            self.finished.emit({"s_id": int(s_id), "name": name, "title": title})
