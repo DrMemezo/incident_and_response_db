@@ -45,9 +45,25 @@ class LoginMode(Mode):
        submit_request(name, role, passw)
 
     def attempt_login(self, name, passw):
-        result = get_staff_info(name, passw) # If the user is an accepted member of staff
-        if not result:
+        status = get_registration_status(name, passw)
+
+        if status is None:
             self.login_view.show_error("Invalid Login!")
             return
+
+        if status == PENDING:
+            self.register_accepted_view.set_message(
+                f"Your application, {name}, is still pending review."
+            )
+            self.show(self.register_accepted_view)
+            return
+
+        if status == REJECTED:
+            self.register_denied_view.set_message("Your application was rejected.")
+            self.show(self.register_denied_view)
+            return
+
+        # Here if it is ACCEPTED.
+        result = get_staff_info(name, passw)
         s_id, _, title = result
         self.finished.emit({"s_id": int(s_id), "name": name, "title": title})
